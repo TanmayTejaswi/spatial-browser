@@ -213,6 +213,51 @@ test('Corpus allowlist strictly requires local loopback origin and exact study p
   assert.strictEqual(matchCorpusPage('http://127.0.0.1:8000/pack_x/materials.html/subpath'), null);
 });
 
+test('Study corpus routes keep retrieval targets at the planned depth without task shortcuts', () => {
+  const packs = [
+    {
+      name: 'pack_x', target: 'materials.html', task2Route: ['index.html', 'perovskite.html', 'materials.html'], earlyShortcut: ['efficiency.html', 'materials.html'],
+      lateBacklink: ['economics.html', 'materials.html'], related: ['materials.html', 'silicon.html']
+    },
+    {
+      name: 'pack_y', target: 'modern1896.html', task2Route: ['index.html', 'antiquity.html', 'modern1896.html'], earlyShortcut: ['winter.html', 'modern1896.html'],
+      lateBacklink: ['economics.html', 'modern1896.html'], related: ['modern1896.html', 'marathon.html']
+    }
+  ];
+
+  for (const pack of packs) {
+    const packDir = path.join(ROOT_DIR, 'study', 'fixtures', pack.name);
+    const pages = fs.readdirSync(packDir).filter((file) => file.endsWith('.html'));
+    assert.strictEqual(pages.length, 8, `${pack.name} must keep the matched eight-page size`);
+    const graph = new Map(pages.map((page) => {
+      const html = fs.readFileSync(path.join(packDir, page), 'utf8');
+      const links = [...html.matchAll(/href=["']([^"'#?]+\.html)["']/gi)].map((match) => match[1]);
+      return [page, links];
+    }));
+
+    const queue = [['index.html', 0]];
+    const visited = new Set();
+    let targetDepth = null;
+    while (queue.length) {
+      const [page, depth] = queue.shift();
+      if (visited.has(page)) continue;
+      visited.add(page);
+      if (page === pack.target) {
+        targetDepth = depth;
+        break;
+      }
+      for (const link of graph.get(page) || []) queue.push([link, depth + 1]);
+    }
+
+    assert.strictEqual(targetDepth, 2, `${pack.name} target must be exactly two link steps from its portal`);
+    assert.strictEqual(graph.get(pack.task2Route[0]).includes(pack.task2Route[1]), true, `${pack.name} portal must lead to the assigned Task 2 route`);
+    assert.strictEqual(graph.get(pack.task2Route[1]).includes(pack.task2Route[2]), true, `${pack.name} Task 2 route must lead from the intermediate page to the target`);
+    assert.strictEqual(graph.get(pack.earlyShortcut[0]).includes(pack.earlyShortcut[1]), false, `${pack.name} task 1 must not link directly to its retrieval target`);
+    assert.strictEqual(graph.get(pack.lateBacklink[0]).includes(pack.lateBacklink[1]), false, `${pack.name} task 5 must not link back to its retrieval target`);
+    assert.strictEqual(graph.get(pack.related[0]).includes(pack.related[1]), true, `${pack.name} target must expose the task 3 related report`);
+  }
+});
+
 test('Target completion requires document load completion (status === complete)', async () => {
   const memStore = createMemoryStorage();
   const storage = new StorageManager({ storageBackend: memStore });

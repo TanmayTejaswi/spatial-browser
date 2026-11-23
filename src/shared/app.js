@@ -26,6 +26,8 @@
   let storageManager = null;
   let studyManager = null;
   let studyTimerInterval = null;
+  let tlxPromptTrialId = null;
+  const tlxTouchedSliderIds = new Set();
   let currentState = null;
   let viewMode = 'overview'; // 'overview' | 'detail'
   let selectedTreeId = null;
@@ -436,8 +438,11 @@
       handleStudyExportDictionary();
     });
 
-    for (const slider of [elTlxMental, elTlxPhysical, elTlxTemporal, elTlxPerformance, elTlxEffort, elTlxFrustration]) {
-      slider.addEventListener('input', updateTlxValues);
+    for (const slider of getTlxSliders()) {
+      slider.addEventListener('input', () => markTlxSliderRated(slider));
+      // A click on the current midpoint does not emit `input`, but it is still
+      // an explicit participant response and must count as a selected rating.
+      slider.addEventListener('pointerdown', () => markTlxSliderRated(slider));
     }
 
     elStudySubmitTlxBtn.addEventListener('click', () => {
@@ -500,7 +505,14 @@
   function openStudyModal() {
     updateStudyUiFromState();
     elStudyModal.hidden = false;
-    elStudyModalCloseBtn.focus();
+    if (elStudyTlxFieldset && !elStudyTlxFieldset.hidden) {
+      requestAnimationFrame(() => {
+        elStudyTlxFieldset.scrollIntoView({ block: 'start' });
+        elTlxMental.focus({ preventScroll: true });
+      });
+    } else {
+      elStudyModalCloseBtn.focus();
+    }
   }
 
   function closeStudyModal() {
@@ -554,6 +566,16 @@
       ? state.trials.find((trial) => trial.trialId === lastId)
       : null;
     const needsTlx = Boolean(lastTrial && !lastTrial.tlx && !isRecording);
+    const pendingTlxTrialId = needsTlx ? lastTrial.trialId : null;
+    if (pendingTlxTrialId !== tlxPromptTrialId) {
+      tlxPromptTrialId = pendingTlxTrialId;
+      tlxTouchedSliderIds.clear();
+      for (const slider of getTlxSliders()) {
+        slider.value = '50';
+        slider.classList.remove('tlx-rated');
+      }
+      updateTlxValues();
+    }
     const lockSetup = isRecording || isFinished || needsTlx;
     const hasValidParticipantId = validateParticipantInput();
 
@@ -570,7 +592,9 @@
 
     // Modal buttons & status
     elStudyStartBtn.disabled = isRecording || isFinished || needsTlx || !assignment || !hasValidParticipantId;
+    elStudyStartBtn.hidden = isRecording || isFinished || needsTlx;
     elStudyStopBtn.disabled = !isRecording;
+    elStudyStopBtn.hidden = !isRecording;
     elStudyParticipantId.disabled = lockSetup;
     elStudySequence.disabled = lockSetup;
     elStudyPeriod.disabled = lockSetup;
@@ -752,26 +776,41 @@
   }
 
   function updateTlxValues() {
-    const m = Number(elTlxMental.value);
-    const p = Number(elTlxPhysical.value);
-    const t = Number(elTlxTemporal.value);
-    const pf = Number(elTlxPerformance.value);
-    const ef = Number(elTlxEffort.value);
-    const fr = Number(elTlxFrustration.value);
+    const sliders = getTlxSliders();
+    let total = 0;
+    let ratedCount = 0;
+    for (const slider of sliders) {
+      const valueElement = document.getElementById(`${slider.id}-val`);
+      const rated = tlxTouchedSliderIds.has(slider.id);
+      slider.setAttribute('aria-valuetext', rated ? `${slider.value} out of 100` : 'Not rated; choose a value from 0 to 100');
+      valueElement.textContent = rated ? slider.value : 'Not rated';
+      if (rated) {
+        total += Number(slider.value);
+        ratedCount += 1;
+      }
+    }
+    elStudySubmitTlxBtn.disabled = ratedCount !== sliders.length;
+    elTlxRawScore.textContent = ratedCount === sliders.length
+      ? `Raw TLX Summary: ${(total / sliders.length).toFixed(1)} / 100`
+      : `Rate all six scales to continue (${ratedCount}/6)`;
+  }
 
-    elTlxMentalVal.textContent = m;
-    elTlxPhysicalVal.textContent = p;
-    elTlxTemporalVal.textContent = t;
-    elTlxPerformanceVal.textContent = pf;
-    elTlxEffortVal.textContent = ef;
-    elTlxFrustrationVal.textContent = fr;
+  function getTlxSliders() {
+    return [elTlxMental, elTlxPhysical, elTlxTemporal, elTlxPerformance, elTlxEffort, elTlxFrustration];
+  }
 
-    const raw = ((m + p + t + pf + ef + fr) / 6.0).toFixed(1);
-    elTlxRawScore.textContent = `Raw TLX Summary: ${raw} / 100`;
+  function markTlxSliderRated(slider) {
+    tlxTouchedSliderIds.add(slider.id);
+    slider.classList.add('tlx-rated');
+    updateTlxValues();
   }
 
   async function handleStudySubmitTlx() {
     if (!studyManager || !studyManager._state) return;
+    if (tlxTouchedSliderIds.size !== getTlxSliders().length) {
+      alert('Set all six workload ratings before saving.');
+      return;
+    }
     const lastId = studyManager._state.lastCompletedTrialId;
     if (!lastId) {
       alert('No completed trial available to attach workload ratings.');
@@ -787,10 +826,8 @@
     };
     try {
       await studyManager.submitTlx(lastId, ratings);
-      for (const slider of [elTlxMental, elTlxPhysical, elTlxTemporal, elTlxPerformance, elTlxEffort, elTlxFrustration]) {
-        slider.value = '50';
-      }
-      updateTlxValues();
+      tlxTouchedSliderIds.clear();
+      tlxPromptTrialId = null;
       updateStudyUiFromState();
     } catch (err) {
       alert(err.message || 'Could not submit NASA-TLX ratings');

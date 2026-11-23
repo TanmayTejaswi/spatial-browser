@@ -10,9 +10,8 @@ This is a comparison of two retrieval interfaces in the same browser. It is not 
 
 ### Outcomes and hypotheses
 
-- **Primary performance outcome:** Whether the participant reaches the exact target page within 120 seconds.
-- **Primary efficiency outcome:** Time from the standardized retrieval instruction to the target page finishing load, among successful trials. Report failures separately; do not pretend a timed-out trial took exactly 120 seconds to succeed.
-- **Primary workload outcome:** NASA-TLX Mental Demand rating immediately after retrieval. This directly asks about perceived mental/perceptual effort rather than inferring cognitive load from speed alone.
+- **Co-primary performance outcomes:** Whether the participant reaches the exact target page within 120 seconds, and successful retrieval time from the standardized instruction to the target page finishing load. Analyze time only for successful paired trials; report timeouts and give-ups separately rather than treating them as successful 120-second times.
+- **Co-primary perceived-workload outcome:** NASA-TLX Mental Demand rating immediately after retrieval. This directly asks about perceived mental/perceptual effort rather than inferring cognitive load from speed alone.
 - **Secondary outcomes:** Other NASA-TLX ratings and raw overall score, number of incorrect task-corpus pages opened during retrieval, participant's preferred tool, and short optional comments.
 
 Pre-register the hypotheses and analysis before participant recruitment: Spatial History will improve success and/or retrieval time and lower Mental Demand. Treat page-open errors and preference as secondary evidence. Define a smallest practically useful time/workload change with the study supervisor rather than choosing the threshold after seeing results.
@@ -41,7 +40,7 @@ For the initial run, recruit **10–15 people from the extension's intended audi
 
 For a confirmatory claim, use the pilot to find procedural problems and estimate variability, set the smallest practically meaningful difference with the supervisor, then run an a priori power analysis for the paired comparison and add expected attrition. Do not select a definitive sample size by rule of thumb or claim that 10–15 participants establish a general effect. G*Power is one established option for planning common behavioral-study tests [Faul et al., 2007](https://doi.org/10.3758/BF03193146).
 
-Get the supervisor's approval for the consent language, recruitment, data handling, and whether institutional review is required **before** collecting participant data. Do not record names, student IDs, browser profiles, or personal browsing histories.
+Get the supervisor's approval for the consent language, recruitment, data handling, and whether institutional review is required **before** collecting participant data. Do not record names, student IDs, browser profiles, or personal browsing histories. The course data-gathering material states that people who take part in a pilot cannot take part in the later main study; keep any feasibility-pilot participants out of a confirmatory sample.
 
 ## 4. Task materials
 
@@ -49,26 +48,26 @@ Use two **matched, controlled research mini-sites** rather than live Wikipedia/A
 
 The project now contains two local controlled packs under [`study/fixtures/`](../study/fixtures/), each with eight pages and a comparable landing page, branching links, a depth-two target path, and related source pages. The operational page links, exact task routes, facilitator timing, and answers are in the [Study Runbook](STUDY_PROTOCOL.md); the printable [Researcher Session Sheet](STUDY_SESSION_SHEET.md) tracks each participant's procedure. Serve the pages on the same computer as Chrome over loopback HTTP; `file://` pages are not accepted by the study logger.
 
-Before recruitment, have people outside the study check the two packs for comparable browsing duration and target difficulty. The pack assigned to each tool is counterbalanced. The exact target URL is known to the study controller, but the participant's retrieval prompt identifies it only by a fact or topic cue, not by page title or URL.
+Before recruitment, run a researcher dry run and check that the two packs have comparable browsing duration, target depth, and target difficulty. If people are invited to a participant pilot to check those points, obtain approval and consent, keep those participants out of any later main study, and report pilot data separately. The pack assigned to each tool is counterbalanced. The exact target URL is known to the study controller, but the participant's retrieval prompt identifies it only by a fact or topic cue, not by page title or URL.
 
 ## 5. Session procedure
 
 Expected time: about **50–60 minutes** per participant.
 
-1. **Consent and setup (5 minutes).** Use one dedicated Chrome study profile with an empty browser history and map. Do not sign into accounts, sync personal history, or use personal websites in this profile. Explain that the study log records controlled-corpus navigation only during timed retrieval; the extension's separate normal map stores page addresses while the extension is enabled. Do not use screen/audio recording or think-aloud in the primary study.
+1. **Consent and setup (5 minutes).** Use one dedicated Chrome study profile with an empty browser history and map. Do not sign into accounts, sync personal history, or use personal websites in this profile. Before opening it, disclose that the normal extension map stores visited page titles and addresses while enabled, while the separate study export stores coded trials and limited allowlisted page keys/actions; explain that neither page contents nor search text nor screen/audio/video is captured, and that data remain local until exported to the approved protected storage. Use only approved consent wording. Do not use screen/audio recording or think-aloud in the primary study.
 2. **Equal familiarization (3–4 minutes).** Demonstrate how to open both tools and show an empty example map without opening the target pages or coaching a retrieval strategy. Use the same brief demonstration for each participant.
 3. **Research round 1 (15 minutes).** Read the assigned pack's five fact-finding prompts at the fixed times in the runbook. The second prompt leads through a two-link route to the target page around minute 5. After reading it, the participant navigates away and continues the remaining prompts for about 10 minutes. Use the same prompt order and timing for both packs.
 4. **Interruption and retrieval (maximum 120 seconds).** At the 15-minute mark, read the same prompt format for everyone: “Using [Chrome History / Spatial Browser History], find the exact page from earlier that mentioned [fact].” Start the study timer immediately after the final word. Stop automatically when the exact target page finishes loading, or record a timeout at 120 seconds. Allow an explicit “give up” action. No hints during the timed period.
 5. **Immediate workload rating (about 2 minutes).** Administer the same six NASA-TLX ratings for each condition. Use the standard scale wording and 0–100 ratings; calculate and retain each subscale plus the unweighted Raw TLX summary. The NASA TLX covers Mental Demand, Physical Demand, Temporal Demand, Performance, Effort, and Frustration [NASA TLX](https://www.nasa.gov/human-systems-integration-division/nasa-task-load-index-tlx/). The raw (unweighted) scoring method is described in the [validated human-factors scales repository](https://www.dote.osd.mil/Portals/97/pub/memos/Repository%20of%20Validated%20Scales%20for%20Human%20Factors%20Evaluation_WithCover.pdf?ver=2020-07-02-113412-667). Keep Mental Demand as its own endpoint; do not report only a composite.
 6. **Reset (about 4 minutes).** Close the round's pages, clear Chrome History using the browser UI, and clear the extension's normal map while retaining the separate study records. Confirm both tools start the next round empty. This reset must not require adding Chrome's `history` permission.
 7. **Research round 2.** Repeat with the other topic pack and other retrieval tool, then administer the workload ratings.
-8. **Closeout (3–5 minutes).** Ask one optional tool preference question and one open-ended question about what helped or hindered retrieval. Explain the study purpose and confirm the participant has no remaining questions.
+8. **Closeout (3–5 minutes).** Ask each participant the same neutral questions in the same order: “Which felt easier for finding the page: Chrome History, Spatial Browser History, about the same, or neither?” and “What, if anything, made finding the page easier or harder?” Record only brief non-identifying notes if approved. Treat these comments as descriptive feedback; do not claim coded themes unless a documented qualitative analysis is carried out. Explain the study purpose and confirm the participant has no remaining questions.
 
 If the target was revisited during the 10-minute interval, mark that trial as protocol-deviant and preserve it in the export. Do not silently discard it; report a sensitivity analysis with and without protocol deviations.
 
 ## 6. What can be measured automatically
 
-The v2.1.0 codebase includes the opt-in Study Mode controller, target-aware 120-second timer, trial labels, six NASA-TLX inputs, and local CSV/JSON exports. During a timed trial it stores only allowlisted corpus page keys and coarse study events. Separately, the extension's ordinary History Map records the pages visited while the extension is installed and enabled. The study export and the ordinary browsing map are separate stores; clearing the map between rounds preserves study records.
+The working-copy codebase includes the opt-in Study Mode controller, target-aware 120-second timer, trial labels, six NASA-TLX inputs, and local CSV/JSON exports. During a timed trial it stores only allowlisted corpus page keys and coarse study events. Separately, the extension's ordinary History Map records page titles and addresses visited while the extension is installed and enabled. The study export and ordinary browsing map are separate stores; clearing the map between rounds preserves study records. Consent must describe both stores accurately.
 
 With an opt-in study mode and the controlled page corpus, the extension can log locally:
 
@@ -87,7 +86,7 @@ The extension stops the timer when a target tab reports the exact corpus key and
 
 ## 7. Export format and privacy
 
-Study mode must be **off by default** and visibly active when a retrieval trial is running. It records no study events until a researcher starts a timed trial. The study-event export stores no full URLs, page text, search text, or off-corpus addresses. The extension's separate ordinary map does store page addresses, so an isolated study-only browser profile is required. Keep all data on-device and use explicit local export/delete controls; do not send telemetry or automatically upload reports.
+Study mode must be **off by default** and visibly active when a retrieval trial is running. It records no study events until a researcher starts a timed trial. The study-event export stores no full URLs, page text, search text, or off-corpus addresses. The extension's separate ordinary map stores visited page titles and addresses while enabled. Before browsing, disclose both stores as described in the approved consent materials; an isolated study-only profile is required so personal browsing is not captured. Keep all data on-device and use explicit local export/delete controls; do not send telemetry or automatically upload reports.
 
 Use a fixed corpus allowlist and opaque page keys. Do not export full URLs, query strings, fragments, page contents, names, account IDs, or browser profile paths. Export two local files:
 
@@ -107,7 +106,7 @@ Freeze the analysis plan before collecting the main pilot. For the 10–15-perso
 - report incorrect page opens as counts/distributions, not as literal click errors;
 - show effect estimates and uncertainty intervals. Do not turn a small pilot's p-value into a broad claim that Spatial History “proves” superiority or reduces cognitive load for everyone.
 
-If the supervisor requires inferential tests for the pilot, preselect them and label results exploratory. For a confirmatory study, plan sample size and analysis in advance based on paired outcomes, handle period/order and topic pack explicitly, define missing/timeout handling, and account for multiple primary outcomes. Usability should be described through task effectiveness, efficiency, and satisfaction in this defined context, consistent with the [ISO 9241-11 framework](https://www.iso.org/standard/63500.html).
+If the supervisor requires inferential tests for the pilot, preselect them and label results exploratory. This is a two-condition within-subject design: for a preselected numeric outcome treated as interval and where assumptions are reasonable, use a paired t-test, not an independent-samples test; the course material presents a paired t-test for two related conditions. With only two conditions, no post-hoc comparison is needed. For binary success, keep paired outcomes visible and use an inferential method only if the supervisor approves and it is fixed in advance. At 10–15 participants, prioritize feasibility, paired plots, effect estimates, and uncertainty over significance claims. For a confirmatory study, plan sample size and analysis in advance based on paired outcomes, handle period/order and topic pack explicitly, define missing/timeout handling, and account for multiple primary outcomes. Usability should be described through task effectiveness, efficiency, and satisfaction in this defined context, consistent with the [ISO 9241-11 framework](https://www.iso.org/standard/63500.html).
 
 ## 9. Readiness gates before recruiting
 
@@ -117,7 +116,7 @@ Do not recruit participants until all gates pass:
 2. Topic packs have equivalent page count, target depth, link opportunities, and pilot difficulty.
 3. Study mode is opt-in, corpus-limited, local-only, visibly active, and stores records separately from the ordinary map; the dedicated profile and map-reset steps are documented.
 4. Retrieval start, target-complete stop, 120-second timeout, abandon, inter-round reset, TLX entry, CSV/JSON export, and deletion have passing tests.
-5. The [Study Runbook](STUDY_PROTOCOL.md), participant task wording, and questionnaire are frozen; supervisor/institution approval is confirmed; the sequence assignment sheet and participant-code process are prepared; and the researcher dry-run checklist passes.
+5. The [Study Runbook](STUDY_PROTOCOL.md), participant task wording, and questionnaire are frozen; supervisor/institution approval is confirmed; the sequence assignment sheet and participant-code process are prepared; the researcher dry-run checklist passes; and any human participants used in a pilot are excluded from a later main study.
 
 ## References
 

@@ -3,12 +3,12 @@
 A local-first browser extension for Google Chrome and Mozilla Firefox that helps students and researchers retrace a best-effort path through pages they visited and reopen useful URLs.
 
 > **Current Stable Release:** [`v2.1.0`](https://github.com/TanmayTejaswi/spatial-browser/releases/tag/v2.1.0) — Cross-browser Manifest V3 release verified in Google Chrome 157 and Mozilla Firefox 160 ([Release Notes](RELEASE_NOTES.md) · [Changelog](CHANGELOG.md))  
-> **Study Readiness:** Opt-in user study controller, visible branching layout repair, title preservation guard, and privacy-preserving CSV/JSON export are implemented and verified across 80 automated tests and isolated Chrome/Firefox runtime checks. See the [Task 18 report](task%20output%20overview/task-18-output.md) and the step-by-step [Study Runbook](docs/STUDY_PROTOCOL.md).
+> **Study Readiness:** The current working copy passes 81 automated checks and isolated Chrome/Firefox runtime verification, including the course-material alignment follow-up. Human sessions still require supervisor/institution approval. See the [Task 18 report](task%20output%20overview/task-18-output.md), [study plan](docs/USER_STUDY_PLAN.md), [Study Runbook](docs/STUDY_PROTOCOL.md), and [course-material alignment review](docs/MATERIALS_ALIGNMENT_REVIEW.md).
 
 ## Project Status & Completed Deliverables
 
 - **Stable Release (`v2.1.0` — Tagged & Published):**
-  - Cross-browser MV3 packages declare Chrome 109+ and Firefox 115.0+ (`80 passed, 0 failed`; isolated-profile runtime E2E suites passed on Google Chrome 157.0.8103.80 and Mozilla Firefox 160.0.1). Task 14 verified Firefox 115.0 ESR. Branded Chrome 109 remains unverified after the Task 17 environment-limited attempt.
+  - Cross-browser MV3 packages declare Chrome 109+ and Firefox 115.0+ (`81 passed, 0 failed`; isolated-profile runtime E2E suites passed on Google Chrome 157.0.8103.80 and Mozilla Firefox 160.0.1). Task 14 verified Firefox 115.0 ESR. Branded Chrome 109 remains unverified after the Task 17 environment-limited attempt.
   - Prebuilt `.zip` / `.xpi` archives and `SHA256SUMS` checksums are published under [GitHub Releases (`v2.1.0`)](https://github.com/TanmayTejaswi/spatial-browser/releases/tag/v2.1.0).
 - **Completed Milestones & Features (`v2.1.0`):**
   - **Accepted Milestone (Milestone 11 / Task 11):** Schema V2, crash-safe migration, sibling branching, startup safety, and distinct-host download provenance are accepted after the Section 56 Chrome/Firefox checks and Section 57 lead review.
@@ -18,7 +18,7 @@ A local-first browser extension for Google Chrome and Mozilla Firefox that helps
   - **Task 15 (Accepted with a limitation):** Branded Chrome 109 remains explicitly unverified. The Windows Sandbox feature is enabled, but the current account lacks Host Compute Service access; the mirrored MSI's hash and Google signature were verified. Task 17 later authenticated and extracted the exact Chrome 109 package but could not run extension acceptance checks in the hosted VM. See the [Task 15 review](task%20output%20overview/task-15-output.md#10-lead-review--task-15-accepted-with-limitation-task-16-assigned) and [Task 17 closeout](task%20output%20overview/task-17-output.md).
   - **Task 16 (Accepted & Fully Verified):** Added a GitHub Actions workflow (`.github/workflows/ci.yml`) running deterministic builds and the full automated test suite on `windows-latest` (Node.js 22 LTS) on push/PR to `main` and `workflow_dispatch`. It uses current official actions, read-only repository permissions, no user-provided secrets, no persisted checkout credentials, and no publishing or artifact uploads. The first GitHub-hosted CI run triggered upon owner-approved push and passed cleanly ([Run #43721541361](https://github.com/TanmayTejaswi/spatial-browser/actions/runs/43721541361)). Browser runtime checks remain manual. See [`task-16-output.md`](task%20output%20overview/task-16-output.md).
   - **Task 17 (Closed with an environment limitation):** The Google-signed Chrome `109.0.5414.165` package was verified and extracted in a disposable VM. The runner could not execute the extension checks: headed Chrome's CDP extension runtime stopped responding without an interactive desktop, and Chrome 109's Chrome-based headless attempt did not load the unpacked extension. This is not a compatibility pass or failure; the Chrome 109 floor remains declared but unverified. See the [Task 17 closeout](task%20output%20overview/task-17-output.md).
-  - **Task 18 (Accepted for Study Readiness):** Repaired storage privacy, redirect destination counting, signal-level deduplication, detail-view branch screenshots, and in-flight target timing. The build, 80 automated tests, and Chrome/Firefox runtime checks pass. The extension is ready for a separately approved pilot; no human study has run, and recruitment/pilot execution requires supervisor/institution approval plus explicit owner authorization. See the [follow-up review](task%20output%20overview/tasks/task-18-review-followup.md) and [Task 18 report](task%20output%20overview/task-18-output.md).
+  - **Task 18 (Accepted for Study Readiness):** Repaired storage privacy, redirect destination counting, signal-level deduplication, detail-view branch screenshots, and in-flight target timing. The acceptance baseline passed 80 checks; the course-material alignment follow-up passed 81 checks and fresh Chrome/Firefox runtime verification. The extension is ready for a separately approved pilot; no human study has run, and recruitment/pilot execution requires supervisor/institution approval plus explicit owner authorization. See the [follow-up review](task%20output%20overview/tasks/task-18-review-followup.md) and [Task 18 report](task%20output%20overview/task-18-output.md).
 
 - **Milestone 1 (Foundation):** Cross-browser extension skeleton with valid MV3 manifests, shared interface shell, single-tab focus behavior, and zero-dependency packaging.
 - **Milestone 2 & 11 (V2 Storage, Tracking, Session Safety & Download Capture):**
@@ -68,6 +68,8 @@ To adhere strictly to least-privilege principles, permissions are limited to the
 │   └── firefox/               # Firefox-specific entry points
 │       ├── manifest.json      # MV3 manifest with background.scripts & gecko ID
 │       └── background.js      # Event page entry point initializing tracker & storage
+├── study/                     # Controlled local Solar Energy and Olympic History task packs
+├── Materials for user study/  # Course lectures, HCI case studies, and proposal rubric
 ├── scripts/
 │   ├── build.mjs                      # Deterministic zero-dependency packaging helper
 │   ├── generate-icons.py              # Standard library PNG & SVG icon generator
@@ -86,6 +88,7 @@ To adhere strictly to least-privilege principles, permissions are limited to the
 │   ├── STUDY_SESSION_SHEET.md # Printable researcher session sheet
 │   ├── STUDY_DATA_DICTIONARY.md # Study CSV/JSON data dictionary
 │   ├── USER_STUDY_PLAN.md     # Within-subject comparison study design plan
+│   ├── MATERIALS_ALIGNMENT_REVIEW.md # PDF-by-PDF course and study alignment audit
 │   └── test-results/          # Real browser E2E execution logs and console error audits
 ├── outputs/                   # Generated build deliverables (do not edit manually)
 │   ├── chrome/

@@ -13,12 +13,13 @@ This is the canonical folder for all upcoming developer tasks. Check here before
 - [Task 16 — Continuous Integration Build and Test Gate](task-16.md) ([Report: `task-16-output.md`](../task-16-output.md)) — Accepted & Verified (Section 9; first GitHub-hosted CI run passed)
 - [Task 17 — Branded Chrome 109 Runtime Verification in a Disposable Hosted VM](task-17.md) ([Report: `task-17-output.md`](../task-17-output.md)) — Closed with environment limitation; the exact package was verified, but Chrome 109 extension runtime remains unverified
 - [Task 18 — Study Readiness: Repair Visible Branching and Add Private Study Export](task-18.md) ([Report: `task-18-output.md`](../task-18-output.md) · [First review corrections](task-18-review.md) · [Follow-up review](task-18-review-followup.md) · [Study design](../../docs/USER_STUDY_PLAN.md)) — Accepted after lead re-review (2026-11-21); human pilot requires supervisor/institution approval and explicit owner authorization
+- [Task 19 — Full Project Audit, Quality Fixes, and GitHub Synchronization](task-19.md) ([Report: `task-19-output.md`](../task-19-output.md)) — Assigned; full repository, build, test, browser, privacy, documentation, and remote CI audit pending
 
 ## Current assignment
 
-- **Current assignment:** No active engineering task. [Task 18](../task-18-output.md) is accepted for study readiness. Do not begin recruitment or a human pilot until supervisor/institution approval and explicit owner authorization are in place.
+- **Current assignment:** [Task 19 — Full Project Audit, Quality Fixes, and GitHub Synchronization](task-19.md). Preserve the uncommitted Task 18 follow-up work and do not commit/push the user-supplied study PDFs without verified distribution rights. Human recruitment or a pilot remains outside scope and requires supervisor/institution approval and explicit owner authorization.
 
-Task 10 v15 is approved. Tasks 11–16 remain accepted. Task 17 is closed with an environment limitation; branded Chrome 109 remains unverified. Task 18 is accepted for study readiness. Do not describe Chromium proxy results as branded Chrome verification.
+Task 10 v15 is approved. Tasks 11–16 remain accepted. Task 17 is closed with an environment limitation; branded Chrome 109 remains unverified. Task 18 is accepted for study readiness. Task 19 is now assigned. Do not describe Chromium proxy results as branded Chrome verification.
 
 ## Reporting workflow
 

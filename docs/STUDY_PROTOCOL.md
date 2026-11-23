@@ -139,9 +139,11 @@ Plan about **50–60 minutes** per participant. Use the same wording, timing, he
 
    > “You will browse two small research archives and later find a page you visited earlier. One retrieval round uses Chrome History and one uses Spatial Browser History. We are evaluating the tools, not grading you. Please use only the pages provided. I will not give hints during the timed retrieval. You may stop at any time.”
 
+   Before opening the study profile, also disclose the data collection plainly: **“This dedicated browser profile starts with an empty history. While the extension is enabled, its regular map stores the titles and addresses of pages you visit so it can build the map. The separate study report stores your participant code, assigned tool and topic, timing and outcome, page keys from these study pages, and limited map actions during the timed search. It does not store page text, what you type in search, or a screen, audio, or video recording. The data stay on this computer until the researcher exports them to the approved protected storage. You may stop at any time.”** Use only wording approved by the supervisor/institution; do not promise that URLs are absent from the normal map just because they are omitted from the study export.
+
 3. Show how to open Chrome History and how to open Spatial Browser History. For the spatial tool, demonstrate only opening a tree and selecting a page. Do not show the assigned target page, cue, route, or recommended retrieval strategy.
 4. Add this consistent navigation instruction: **“Follow only the links named in each task, and use the portal link when I ask you to return. Please do not open other links unless a task asks you to.”** This prevents a cross-link from revealing the target before Task 2.
-5. Do not begin the timed retrieval or turn on recording during orientation.
+5. Do not start the timed retrieval during orientation. Do not make screen, audio, or video recordings.
 
 ### Part 2 — Configure Round 1 (before browsing)
 
@@ -187,7 +189,7 @@ Do not tell the participant the target page title or URL. The expected target is
 
 ### Part 5 — Workload ratings (about 2 minutes)
 
-After success, timeout, or an early give-up, reopen Study Mode if needed. The six ratings appear only when a round has ended. Ask the participant to rate the attempt that just ended, not the browsing activity as a whole. Read these questions neutrally:
+After success, timeout, or an early give-up, reopen Study Mode if needed. The panel opens at the six ratings and hides the next-round start action until the ratings are saved. Ask the participant to rate the attempt that just ended, not the browsing activity as a whole. Read these questions neutrally:
 
 1. **Mental Demand:** How mentally demanding was it?
 2. **Physical Demand:** How physically demanding was it?
@@ -196,7 +198,7 @@ After success, timeout, or an early give-up, reopen Study Mode if needed. The si
 5. **Effort:** How hard did you have to work?
 6. **Frustration:** How insecure, discouraged, irritated, stressed, or annoyed did you feel?
 
-Set each slider to the participant's response from 0 to 100 in steps of 5. The extension resets the visible sliders to the midpoint for the next round; do not treat the midpoint as a default answer. Click **Save ratings** before changing rounds. The Raw TLX mean is calculated automatically.
+Set all six sliders to the participant's response from 0 to 100 in steps of 5. Each response must be deliberately selected; an untouched midpoint is not an answer. The extension marks unselected scales **Not rated**, keeps **Save ratings** disabled until all six are selected, and calculates the Raw TLX mean only after completion. Click **Save ratings** before changing rounds.
 
 ### Part 6 — Reset before Round 2 (about 4 minutes)
 
@@ -215,10 +217,10 @@ Do not click **Delete saved study data** as part of the round reset.
 
 After Round 2 ratings have been saved, ask:
 
-- “Which tool felt more helpful for finding a page you had visited earlier?”
-- “What helped or made the task harder in either tool?”
+- “Which felt easier for finding the page: Chrome History, Spatial Browser History, about the same, or neither?”
+- “What, if anything, made finding the page easier or harder?”
 
-Record only brief non-identifying notes if allowed by the approved protocol. In Study Mode, expand **Finish the session or manage saved study data**, then click **Finish session**. The controller prevents finishing while the last round's workload ratings are unsaved.
+Ask them in this order for every participant. Record only brief non-identifying notes if allowed by the approved protocol. Treat comments as descriptive feedback unless a documented qualitative coding method is approved and applied. In Study Mode, expand **Finish the session or manage saved study data**, then click **Finish session**. The controller prevents finishing while the last round's workload ratings are unsaved.
 
 ## 6. Participant task cards and researcher answer key
 
@@ -232,7 +234,7 @@ Portal: [http://127.0.0.1:8000/pack_x/index.html](http://127.0.0.1:8000/pack_x/i
 | :--- | :--- | :--- |
 | 1 | “Find the theoretical efficiency limit for a single-junction solar cell and the bandgap associated with it.” | Portal → [Photovoltaic limits](http://127.0.0.1:8000/pack_x/efficiency.html). **33.7%; optimal bandgap 1.34 eV.** |
 | 2 (target) | “Find the page about perovskite crystal stability, then follow its related link to the tandem-cell laboratory benchmark. Note the certified efficiency and the month/year.” | Portal → [Perovskite stability](http://127.0.0.1:8000/pack_x/perovskite.html) → [Tandem-cell materials](http://127.0.0.1:8000/pack_x/materials.html). **24.4%, November 2023.** Ask them to leave this page after reading. |
-| 3 | “Explore the related reports on silicon wafering and perovskite stability. Find one detail about wafer thickness and one about the stability test.” | From the target, follow links to [Silicon wafering](http://127.0.0.1:8000/pack_x/silicon.html) and [Perovskite stability](http://127.0.0.1:8000/pack_x/perovskite.html); use each page's Portal Index link to move on. **Below 130 microns; over 1,000 hours at 85°C.** Avoid returning to the target page after Task 2. |
+| 3 | “From the page you just read, open the related silicon-wafering report. Find the wafer thickness. Also tell me one stability-test detail from the perovskite page you read just before it.” | Target page → [Silicon wafering](http://127.0.0.1:8000/pack_x/silicon.html) → **Portal Index**. The participant already saw the perovskite page on the Task 2 route, so do not ask them to reopen it. **Below 130 microns; the prior page reported more than 1,000 continuous hours at 85°C.** This avoids revisiting the target through the perovskite page. |
 | 4 | “Return to the portal and inspect thermal storage. Find the operating temperature range for the two-tank nitrate salt system.” | Portal → [Thermal storage](http://127.0.0.1:8000/pack_x/storage.html). **290°C–565°C.** |
 | 5 | “From thermal storage, follow the grid standards link, then inspect the financial model page. Find the inverter standard and one LCOE benchmark.” | [Grid standards](http://127.0.0.1:8000/pack_x/grid.html) → [Solar LCOE](http://127.0.0.1:8000/pack_x/economics.html). **IEEE 1547-2018; below $0.035/kWh** in high-irradiance regions. |
 
@@ -246,7 +248,7 @@ Portal: [http://127.0.0.1:8000/pack_y/index.html](http://127.0.0.1:8000/pack_y/i
 | :--- | :--- | :--- |
 | 1 | “Find the number of athletes, nations, and events at the 1924 Chamonix winter sports week.” | Portal → [1924 Chamonix Games](http://127.0.0.1:8000/pack_y/winter.html). **258 athletes, 16 nations, 16 events.** |
 | 2 (target) | “Open the page about the ancient Games and follow its link to the inaugural 1896 Athens Games. Note the number of athletes, nations, and events.” | Portal → [Ancient Games](http://127.0.0.1:8000/pack_y/antiquity.html) → [1896 Games records](http://127.0.0.1:8000/pack_y/modern1896.html). **241 athletes, 14 nations, 43 events.** Ask them to leave this page after reading. |
-| 3 | “Explore the related pages about the marathon and the ancient truce. Find the marathon distance and one purpose of the truce.” | From the target, visit [Marathon history](http://127.0.0.1:8000/pack_y/marathon.html); visit [Ancient Games](http://127.0.0.1:8000/pack_y/antiquity.html) and return to the portal from there. **About 40 km; safe passage for athletes, heralds, and pilgrims.** Avoid returning to the target page after Task 2. |
+| 3 | “From the page you just read, open the related marathon report. Find the course distance. Also tell me one purpose of the ancient truce from the page you read just before it.” | Target page → [Marathon history](http://127.0.0.1:8000/pack_y/marathon.html) → **Archive Index**. The participant already saw the ancient truce page on the Task 2 route, so do not ask them to reopen it. **About 40 km; the truce provided safe passage for athletes, heralds, and pilgrims.** This avoids revisiting the target through the ancient-games page. |
 | 4 | “Return to the portal, open the Paralympic origins page, then follow its Olympic torch link. Find when the formal torch relay began.” | Portal → [Paralympic origins](http://127.0.0.1:8000/pack_y/paralympic.html) → [Torch relay](http://127.0.0.1:8000/pack_y/torches.html). **1936 Berlin Olympiad.** |
 | 5 | “From the torch page, follow the host-city economics link. Find one contrast between Montreal 1976 and Los Angeles 1984.” | [Host-city economics](http://127.0.0.1:8000/pack_y/economics.html). **Montreal debt took 30 years to retire; Los Angeles 1984 produced an operating surplus.** |
 
@@ -261,7 +263,7 @@ The simplified panel is operated by the researcher:
 3. Run the 15-minute browsing activity without starting the timer.
 4. At retrieval, read the prompt and press **Start retrieval timer (max 2 min)** immediately after its last word. The panel closes; the recording banner shows the round and remaining seconds. The timer continues if you switch tabs.
 5. If the participant gives up, use **Participant gives up**. Otherwise, the extension stops automatically on target load or at two minutes.
-6. Reopen **Study Mode**. Enter and save the six workload ratings. You cannot start the next round until these ratings are saved.
+6. Reopen **Study Mode**. It takes you directly to the unanswered workload ratings. Record and save all six; the next-round start action remains hidden until you finish this step.
 7. Repeat for Round 2. After Round 2 ratings, expand **Finish the session or manage saved study data** and click **Finish session**.
 
 The two checkboxes under **Protocol notes** are optional. Mark the target-revisited checkbox if the participant returned to the target after first seeing it during the 15-minute activity. Mark the other checkbox for another deviation and write a short, non-identifying researcher note separately. These flags do not alter or erase a trial.

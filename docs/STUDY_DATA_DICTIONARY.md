@@ -22,7 +22,7 @@ Each row corresponds to one condition trial evaluated by a participant.
 | `start_time_utc` | String | UTC timestamp when retrieval timer started | ISO 8601 string (e.g. `2026-11-20T10:15:00.000Z`) |
 | `end_time_utc` | String | UTC timestamp when retrieval trial concluded | ISO 8601 string (e.g. `2026-11-20T10:15:28.450Z`) |
 | `elapsed_ms` | Integer | Total elapsed trial duration in milliseconds | Integer $\ge 0$, capped at $120000$ |
-| `outcome` | String | Concluding status of retrieval attempt | `success`, `timeout` ($>120$s), `abandoned` |
+| `outcome` | String | Concluding status of retrieval attempt | `success`, `timeout` (120-second limit reached), `abandoned` |
 | `target_revisited_delay` | Boolean | Whether participant revisited target during the 10-minute setup interval | `true` or `false` |
 | `protocol_deviation` | Boolean | Whether an experimental deviation occurred during trial | `true` or `false` |
 | `incorrect_page_opens` | Integer | Count of non-target allowlisted corpus pages loaded during the timed interval | Integer $\ge 0$ (does not include reloads, hash updates, or redirects) |

@@ -316,9 +316,9 @@ Automated runtime verification was executed via `scripts/e2e-task18-runtime.py`:
 | **Study Manager & Privacy Boundary** | `src/shared/study-manager.js` | Latin square matrix, load-complete target detection, transient in-memory tab state, redirect destination counting, signal deduplication, Finish Session, CSV/JSON exports |
 | **Tracker Completion Hook** | `src/shared/tracker.js` | Restricted study navigation notifications strictly to `changeInfo.status === 'complete'` |
 | **Corpus & Local Allowlist** | `src/shared/study-corpus.js` | Strict loopback origin requirement, exact study path matching, opaque key mapping |
-| **UI Controller & Detail View Access** | `src/shared/app.js`, `index.html`, `styles.css` | Detail view delegation, auto-derived assignments, step-5 TLX sliders, Finish Session button, Data Dictionary viewer |
+| **UI Controller & Detail View Access** | `src/shared/app.js`, `index.html`, `styles.css` | Detail view delegation, auto-derived assignments, guided pending-TLX state, Finish Session button, Data Dictionary viewer |
 | **Synthetic Topic Packs** | `study/fixtures/pack_x/`, `study/fixtures/pack_y/` | Matched 8-page fixtures with Depth 2 target traversal |
-| **Automated Test Suite** | `tests/test-study.mjs` | 15 automated study & privacy tests (80 tests total across project) |
+| **Automated Test Suite** | `tests/test-study.mjs` | 16 study & privacy tests; 81 total checks in the 2026-11-23 follow-up |
 | **Browser Runtime Runner** | `scripts/e2e-task18-runtime.py` | Isolated-profile browser automation for Chrome 157 and Firefox 160 |
 | **Browser Runtime Logs** | `docs/test-results/*task18-*.{log,json}` | Full Chrome & Firefox execution logs and 0-error audits |
 | **Detail Branch Screenshots** | `docs/test-results/*branch-*.png` | Detail view branch graph screenshots across desktop and reflow viewports |
@@ -339,3 +339,24 @@ Final verification on the accepted source state:
 - The four browser/viewport screenshots show the actual detail graph with visible sibling branches and Source A descendants.
 
 **Task 18 is accepted as implementation and study-readiness work.** The published v2.0.0 release remains unchanged; the branch has not been merged, tagged, or published. No human participants were recruited and no efficacy result is claimed. Do not begin recruitment or run a human pilot until the supervisor/institution has approved the protocol and the owner explicitly authorizes that next phase.
+
+---
+
+## 12. Course-Material Alignment Follow-Up — 2026-11-23
+
+The lead reviewed all 16 supplied PDFs and compared the course guidance with the extension, study protocol, controlled task packs, rating screen, and data exports. The full file-by-file crosswalk is in [the alignment review](../docs/MATERIALS_ALIGNMENT_REVIEW.md).
+
+Follow-up changes:
+
+- Removed the Pack X and Pack Y links that exposed the retrieval page from an earlier or later browsing task. Added a regression check for both packs' eight-page size, exact two-link target route, Task 3 related-page route, and absence of the early/late shortcuts.
+- Simplified the pending-rating state: the panel opens on the six unanswered workload ratings, hides the next-round start button, shows no midpoint value before selection, and enables saving only after all six ratings have been selected. The explicit midpoint remains a valid answer.
+- Updated the consent/runbook language to disclose separately what the ordinary map stores and what the limited study export stores; standardized the neutral closeout questions and paired-analysis guidance; corrected the timeout description in the data dictionary.
+
+Verification of the current working copy:
+
+- `npm.cmd run build`: passed for Chrome and Firefox.
+- `npm.cmd test`: **81 passed, 0 failed** (12 build/launch, 35 tracker/storage, 14 UI, 4 graph, 16 study/privacy).
+- `py scripts/e2e-task18-runtime.py`: Google Chrome `157.0.8103.80` and Mozilla Firefox `160.0.1` both passed, including unanswered-rating state, explicit midpoint selection, hiding the start action while ratings are pending, and the existing task/export/privacy checks. Both browsers recorded zero pre-test and post-test errors. Current logs: [Chrome](../docs/test-results/chrome-task18-e2e.log) and [Firefox](../docs/test-results/firefox-task18-e2e.log).
+- Unanswered-rating UI screenshots were captured for both browsers: [Chrome](../docs/test-results/chrome-study-tlx-unanswered.png) and [Firefox](../docs/test-results/firefox-study-tlx-unanswered.png).
+
+The 15-minute browsing schedule and equivalence of pack difficulty still require a researcher dry run; static checks establish matching page count and target depth, not equal participant difficulty. The proposal PDF lists Dec 7 and Dec 9 for the user study; confirm these dates with the latest course announcement. No participants were recruited and no human data were collected. Supervisor/institution approval remains required before any participant session.

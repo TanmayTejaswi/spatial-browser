@@ -13,6 +13,7 @@ For the full script, links, task routes, reset instructions, and export steps, s
 - Participant code: `P_____`
 - Assigned sequence: `1 / 2 / 3 / 4`
 - Consent confirmed according to approved procedure: `Yes / No`
+- Separate ordinary-map and study-export data collection explained: `Yes / No`
 - Session date (if approved to record): `____________`
 
 | Round | Assigned tool | Topic pack | Pack portal opened | Target reached near minute 5 |
@@ -69,7 +70,8 @@ Use Study Mode's blue assignment summary to check tool and pack. Do not override
 
 ## Closeout
 
-- Preference response (if approved): `Chrome History / Spatial Map / No preference`
+- Neutral preference response (if approved): `Chrome History / Spatial Map / About the same / Neither / No response`
+- Ask in the same wording/order: “Which felt easier for finding the page: Chrome History, Spatial Browser History, about the same, or neither?” Then: “What, if anything, made finding the page easier or harder?”
 - Brief, non-identifying feedback (if approved):
 
   `______________________________________________________________________________`

@@ -654,7 +654,9 @@ def run_chrome_test(http_port, cdn_port):
                 res({count: s.activeTrial ? s.activeTrial.incorrectPageOpens : -1, events: s.events || []});
             }))
         """, await_promise=True)
-        assert client_redirect_audit["count"] == 2, f"Meta-refresh client redirect should count final corpus destination once, got {client_redirect_audit}"
+        client_redirect_page = cdp.eval(tab1_sid, "({url: location.href, title: document.title})")
+        assert client_redirect_page["url"].endswith("/study/fixtures/pack_x/grid.html"), f"Meta-refresh should land on the corpus destination, got {client_redirect_page}"
+        assert client_redirect_audit["count"] == 2, f"Meta-refresh client redirect should count final corpus destination once; page={client_redirect_page}, audit={client_redirect_audit}"
         assert sum(1 for e in client_redirect_audit["events"] if e.get("event_type") == "corpus_navigation" and e.get("page_key") == "px_grid") == 1
         print("[PASS] Meta-refresh client redirect counted final corpus destination once (no intermediate event).")
 
@@ -705,6 +707,17 @@ def run_chrome_test(http_port, cdn_port):
         # Submit NASA-TLX
         cdp.eval(map_sid, "document.getElementById('study-controller-btn').click()")
         time.sleep(0.5)
+        tlx_initial = cdp.eval(map_sid, "({disabled: document.getElementById('study-submit-tlx-btn').disabled, mental: document.getElementById('tlx-mental-val').textContent, startHidden: document.getElementById('study-start-btn').hidden, focused: document.activeElement.id})")
+        assert tlx_initial["disabled"] and tlx_initial["mental"] == "Not rated", f"Chrome TLX must begin unanswered: {tlx_initial}"
+        assert tlx_initial["startHidden"] and tlx_initial["focused"] == "tlx-mental", f"Chrome must open directly on pending ratings: {tlx_initial}"
+        print("[PASS] Chrome opens directly on unanswered ratings; next-round start is hidden")
+        unanswered_png = cdp.cmd("Page.captureScreenshot", {"format": "png"}, session_id=map_sid)["data"]
+        with open(os.path.join(RESULTS_DIR, "chrome-study-tlx-unanswered.png"), "wb") as f:
+            f.write(base64.b64decode(unanswered_png))
+        cdp.eval(map_sid, "document.getElementById('tlx-mental').dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerType: 'mouse'}))")
+        assert cdp.eval(map_sid, "document.getElementById('tlx-mental-val').textContent") == "50", "An explicit midpoint choice must be recorded as 50"
+        assert cdp.eval(map_sid, "document.getElementById('study-submit-tlx-btn').disabled") is True, "One selected scale must not enable TLX saving"
+        print("[PASS] Chrome explicit midpoint selection is recorded without counting untouched scales")
         cdp.eval(map_sid, """
             document.getElementById('tlx-mental').value = 30;
             document.getElementById('tlx-physical').value = 10;
@@ -712,10 +725,12 @@ def run_chrome_test(http_port, cdn_port):
             document.getElementById('tlx-performance').value = 20;
             document.getElementById('tlx-effort').value = 25;
             document.getElementById('tlx-frustration').value = 15;
-            for (let id of ['tlx-mental', 'tlx-physical', 'tlx-temporal', 'tlx-performance', 'tlx-effort', 'tlx-frustration']) {
+            for (let id of ['tlx-mental', 'tlx-physical', 'tlx-temporal', 'tlx-performance', 'tlx-effort']) {
                 document.getElementById(id).dispatchEvent(new Event('input'));
             }
         """)
+        assert cdp.eval(map_sid, "document.getElementById('study-submit-tlx-btn').disabled") is True, "Chrome TLX save must stay disabled until all six scales are rated"
+        cdp.eval(map_sid, "document.getElementById('tlx-frustration').dispatchEvent(new Event('input'))")
         time.sleep(0.3)
         raw_tlx_display = cdp.eval(map_sid, "document.getElementById('tlx-raw-score').textContent")
         print(f"[PASS] Raw TLX live calculation verified: {raw_tlx_display} (expected 23.3)")
@@ -1227,6 +1242,17 @@ def run_firefox_test(http_port, cdn_port):
         time.sleep(0.5)
 
         # Set NASA-TLX values (Mental: 30, Physical: 10, Temporal: 40, Performance: 20, Effort: 25, Frustration: 15)
+        tlx_initial = client.send_cmd("WebDriver:ExecuteScript", {"script": "return ({disabled: document.getElementById('study-submit-tlx-btn').disabled, mental: document.getElementById('tlx-mental-val').textContent, startHidden: document.getElementById('study-start-btn').hidden, focused: document.activeElement.id});"})["value"]
+        assert tlx_initial["disabled"] and tlx_initial["mental"] == "Not rated", f"Firefox TLX must begin unanswered: {tlx_initial}"
+        assert tlx_initial["startHidden"] and tlx_initial["focused"] == "tlx-mental", f"Firefox must open directly on pending ratings: {tlx_initial}"
+        print("[PASS] Firefox opens directly on unanswered ratings; next-round start is hidden")
+        unanswered_png = client.send_cmd("WebDriver:TakeScreenshot", {"full": False})["value"]
+        with open(os.path.join(RESULTS_DIR, "firefox-study-tlx-unanswered.png"), "wb") as f:
+            f.write(base64.b64decode(unanswered_png))
+        client.send_cmd("WebDriver:ExecuteScript", {"script": "document.getElementById('tlx-mental').dispatchEvent(new PointerEvent('pointerdown', {bubbles: true, pointerType: 'mouse'}));"})
+        assert client.send_cmd("WebDriver:ExecuteScript", {"script": "return document.getElementById('tlx-mental-val').textContent;"})["value"] == "50", "An explicit midpoint choice must be recorded as 50"
+        assert client.send_cmd("WebDriver:ExecuteScript", {"script": "return document.getElementById('study-submit-tlx-btn').disabled;"})["value"] is True, "One selected scale must not enable TLX saving"
+        print("[PASS] Firefox explicit midpoint selection is recorded without counting untouched scales")
         client.send_cmd("WebDriver:ExecuteScript", {"script": """
             document.getElementById('tlx-mental').value = 30;
             document.getElementById('tlx-physical').value = 10;
@@ -1234,10 +1260,12 @@ def run_firefox_test(http_port, cdn_port):
             document.getElementById('tlx-performance').value = 20;
             document.getElementById('tlx-effort').value = 25;
             document.getElementById('tlx-frustration').value = 15;
-            for (let id of ['tlx-mental', 'tlx-physical', 'tlx-temporal', 'tlx-performance', 'tlx-effort', 'tlx-frustration']) {
+            for (let id of ['tlx-mental', 'tlx-physical', 'tlx-temporal', 'tlx-performance', 'tlx-effort']) {
                 document.getElementById(id).dispatchEvent(new Event('input'));
             }
         """})
+        assert client.send_cmd("WebDriver:ExecuteScript", {"script": "return document.getElementById('study-submit-tlx-btn').disabled;"})["value"] is True, "Firefox TLX save must stay disabled until all six scales are rated"
+        client.send_cmd("WebDriver:ExecuteScript", {"script": "document.getElementById('tlx-frustration').dispatchEvent(new Event('input'));"})
         time.sleep(0.3)
         raw_tlx_display = client.send_cmd("WebDriver:ExecuteScript", {"script": "return document.getElementById('tlx-raw-score').textContent;"})["value"]
         print(f"[PASS] Firefox Raw TLX calculation: {raw_tlx_display}")

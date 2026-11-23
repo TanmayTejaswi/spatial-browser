@@ -22,9 +22,9 @@ All distribution packages are generated deterministically with zero external dep
 
 | Deliverable | Path | Size | SHA-256 Hash |
 | :--- | :--- | :--- | :--- |
-| **Chrome Release Archive** | `outputs/chrome/spatial-browser-history-extension.zip` | 62,236 bytes | `b923e628a3130f10964a13020d447d151613a92a28acb3d6dab344562630188d` |
-| **Firefox Release Archive** | `outputs/firefox/spatial-browser-history-firefox.zip` | 62,198 bytes | `3563069920cb4fab66064340270df516b9cda6e23125074456046cf29b3306b6` |
-| **Firefox Add-on Package** | `outputs/firefox/spatial-browser-history-firefox.xpi` | 62,198 bytes | `3563069920cb4fab66064340270df516b9cda6e23125074456046cf29b3306b6` |
+| **Chrome Release Archive** | `outputs/chrome/spatial-browser-history-extension.zip` | 62,963 bytes | `516fc543a7135617923f5fd482006d0082b62099fab0237c98500e54ded930e2` |
+| **Firefox Release Archive** | `outputs/firefox/spatial-browser-history-firefox.zip` | 62,922 bytes | `cf07f7ef655938fc7c48e69caa950ca7ac81982ce08de678eae5dfe92206b270` |
+| **Firefox Add-on Package** | `outputs/firefox/spatial-browser-history-firefox.xpi` | 62,922 bytes | `cf07f7ef655938fc7c48e69caa950ca7ac81982ce08de678eae5dfe92206b270` |
 | **Chrome Unpacked Build** | `outputs/chrome/unpacked/` | Directory | Matches zip contents byte-for-byte |
 | **Firefox Unpacked Build** | `outputs/firefox/unpacked/` | Directory | Matches zip/xpi contents byte-for-byte |
 
@@ -102,18 +102,20 @@ All distribution packages are generated deterministically with zero external dep
 
 ### Automated Test Suite
 Run command: `npm test`  
-Result: **80 passed, 0 failed**
+Result: **81 passed, 0 failed**
 - Build, Manifest, CSP, Parity, and Archive Integrity: **12 tests passed**
 - Navigation Tracker, Sibling Branching, Session Safety & Storage V2: **35 tests passed**
 - Research Tree Explorer UI, Reflow Layout, Contrast, and Security: **14 tests passed**
 - Branching Layout & Reflow Geometry: **4 tests passed**
-- User Study Controller, Latin Square, NASA-TLX & Privacy Boundaries: **15 tests passed**
+- User Study Controller, Latin Square, NASA-TLX & Privacy Boundaries: **16 tests passed**
 
 ### Cross-Browser End-to-End Test Records
 Verified via automated runtime harness in isolated profiles:
 - **Google Chrome `157.0.8103.80`:**
   - Automated run log: [`docs/test-results/chrome-task18-e2e.log`](docs/test-results/chrome-task18-e2e.log) — **0 errors, 0 warnings**
   - Detail Branch Screenshots: [`chrome-branch-desktop.png`](docs/test-results/chrome-branch-desktop.png) (`1280x800`), [`chrome-branch-reflow.png`](docs/test-results/chrome-branch-reflow.png) (`480x800`)
+  - Unanswered NASA-TLX UI Screenshot: [`chrome-study-tlx-unanswered.png`](docs/test-results/chrome-study-tlx-unanswered.png)
 - **Mozilla Firefox `160.0.1`:**
   - Automated run log: [`docs/test-results/firefox-task18-e2e.log`](docs/test-results/firefox-task18-e2e.log) — **0 errors, 0 warnings**
   - Detail Branch Screenshots: [`firefox-branch-desktop.png`](docs/test-results/firefox-branch-desktop.png), [`firefox-branch-reflow.png`](docs/test-results/firefox-branch-reflow.png)
+  - Unanswered NASA-TLX UI Screenshot: [`firefox-study-tlx-unanswered.png`](docs/test-results/firefox-study-tlx-unanswered.png)

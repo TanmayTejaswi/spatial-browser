@@ -828,7 +828,7 @@ Each row corresponds to one condition trial evaluated by a participant.
 - start_time_utc (String): ISO 8601 UTC timestamp of retrieval timer start.
 - end_time_utc (String): ISO 8601 UTC timestamp of retrieval trial conclusion.
 - elapsed_ms (Integer): Total elapsed duration in milliseconds (<= 120000).
-- outcome (String): Concluding status: success, timeout (>120s), or abandoned.
+- outcome (String): Concluding status: success, timeout (120-second limit reached), or abandoned.
 - target_revisited_delay (Boolean): Whether target was revisited during 10-min setup delay.
 - protocol_deviation (Boolean): Whether experimental deviation occurred during round.
 - incorrect_page_opens (Integer): Non-target allowlisted corpus pages loaded during retrieval.

@@ -317,7 +317,7 @@
 
             <!-- Privacy & Consent Notice -->
             <div class="study-privacy-notice" role="note">
-              <strong>Use a clean study profile.</strong> During timed retrieval, Study Mode stores the participant code, timing/outcome, approved local page keys, and coarse study actions. It does not store page contents or typed search text. The separate history map can save page addresses while you browse, so use a temporary profile only for the study pages. Study records remain on this device.
+              <strong>Use a clean study profile only for the study pages.</strong> While the extension is enabled, its regular map stores page titles and addresses. During timed retrieval, Study Mode separately stores the participant code, assigned condition and topic, timing/outcome, allowlisted page keys, and limited map actions. It does not store page contents or typed searches. Nothing is uploaded; study records stay on this device until the researcher exports them.
             </div>
 
             <!-- Active Configuration / Start -->
@@ -384,13 +384,13 @@
             <!-- Post-Trial NASA-TLX Assessment -->
             <fieldset class="study-fieldset study-tlx-fieldset" id="study-tlx-fieldset" hidden>
               <legend class="study-legend">2. Ask for workload ratings</legend>
-              <p class="study-tlx-desc">Ask these immediately after retrieval. Set each scale from 0 to 100 in steps of 5. Higher means more of that feeling; for Performance, higher means the participant felt less successful.</p>
+              <p class="study-tlx-desc">Ask these immediately after retrieval. Set all six scales from 0 to 100 in steps of 5; each scale must be deliberately selected. Unselected scales are not answers. Higher means more of that feeling; for Performance, higher means the participant felt less successful.</p>
 
               <div class="tlx-grid">
                 <div class="tlx-item">
                   <div class="tlx-label-row">
                     <label for="tlx-mental">Mental Demand</label>
-                    <span id="tlx-mental-val" class="tlx-val-badge">50</span>
+                    <span id="tlx-mental-val" class="tlx-val-badge">Not rated</span>
                   </div>
                   <div class="tlx-anchor-row"><span>Very Low</span><span>Very High</span></div>
                   <input type="range" id="tlx-mental" min="0" max="100" step="5" value="50" class="tlx-slider">
@@ -399,7 +399,7 @@
                 <div class="tlx-item">
                   <div class="tlx-label-row">
                     <label for="tlx-physical">Physical Demand</label>
-                    <span id="tlx-physical-val" class="tlx-val-badge">50</span>
+                    <span id="tlx-physical-val" class="tlx-val-badge">Not rated</span>
                   </div>
                   <div class="tlx-anchor-row"><span>Very Low</span><span>Very High</span></div>
                   <input type="range" id="tlx-physical" min="0" max="100" step="5" value="50" class="tlx-slider">
@@ -408,7 +408,7 @@
                 <div class="tlx-item">
                   <div class="tlx-label-row">
                     <label for="tlx-temporal">Temporal Demand</label>
-                    <span id="tlx-temporal-val" class="tlx-val-badge">50</span>
+                    <span id="tlx-temporal-val" class="tlx-val-badge">Not rated</span>
                   </div>
                   <div class="tlx-anchor-row"><span>Very Low</span><span>Very High</span></div>
                   <input type="range" id="tlx-temporal" min="0" max="100" step="5" value="50" class="tlx-slider">
@@ -417,7 +417,7 @@
                 <div class="tlx-item">
                   <div class="tlx-label-row">
                     <label for="tlx-performance">Performance</label>
-                    <span id="tlx-performance-val" class="tlx-val-badge">50</span>
+                    <span id="tlx-performance-val" class="tlx-val-badge">Not rated</span>
                   </div>
                   <div class="tlx-anchor-row"><span>Perfect</span><span>Failure</span></div>
                   <input type="range" id="tlx-performance" min="0" max="100" step="5" value="50" class="tlx-slider">
@@ -426,7 +426,7 @@
                 <div class="tlx-item">
                   <div class="tlx-label-row">
                     <label for="tlx-effort">Effort</label>
-                    <span id="tlx-effort-val" class="tlx-val-badge">50</span>
+                    <span id="tlx-effort-val" class="tlx-val-badge">Not rated</span>
                   </div>
                   <div class="tlx-anchor-row"><span>Very Low</span><span>Very High</span></div>
                   <input type="range" id="tlx-effort" min="0" max="100" step="5" value="50" class="tlx-slider">
@@ -435,7 +435,7 @@
                 <div class="tlx-item">
                   <div class="tlx-label-row">
                     <label for="tlx-frustration">Frustration</label>
-                    <span id="tlx-frustration-val" class="tlx-val-badge">50</span>
+                    <span id="tlx-frustration-val" class="tlx-val-badge">Not rated</span>
                   </div>
                   <div class="tlx-anchor-row"><span>Very Low</span><span>Very High</span></div>
                   <input type="range" id="tlx-frustration" min="0" max="100" step="5" value="50" class="tlx-slider">
@@ -443,8 +443,8 @@
               </div>
 
               <div class="tlx-summary-row">
-                <span id="tlx-raw-score" class="tlx-raw-badge">Raw TLX Summary: 50.0 / 100</span>
-                <button id="study-submit-tlx-btn" type="button" class="btn btn-primary btn-sm">Save ratings</button>
+                <span id="tlx-raw-score" class="tlx-raw-badge" aria-live="polite">Rate all six scales to continue (0/6)</span>
+                <button id="study-submit-tlx-btn" type="button" class="btn btn-primary btn-sm" disabled>Save ratings</button>
               </div>
             </fieldset>
 
